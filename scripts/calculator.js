@@ -11,7 +11,7 @@ const updateDisplay = (value) => {
 };
 
 // Reset all
-const clearAll = () => {
+const clearFull = () => {
   currentInput = '0';
   previousInput = '';
   operator = '';
@@ -22,19 +22,19 @@ const clearAll = () => {
 const handleButtonClick = (value) => {
   switch (value) {
     case 'C':
-      clearAll();
+      clearFull();
       break;
     case 'CE':
       clearCurrentEntry();
       break;
     case '=':
-      handleEquals();
+      handleEqualsNumber();
       break;
     case '+':
     case '-':
     case '*':
     case '/':
-      handleOperatorInput(value);
+      handleOperatorsInput(value);
       break;
     case 'del':
       handleDelete();
@@ -64,10 +64,10 @@ const handleNumberInput = (number) => {
 };
 
 // Handle operator input
-const handleOperatorInput = (op) => {
+const handleOperatorsInput = (op) => {
   if (currentInput !== '0') {
     if (operator) {
-      handleEquals();
+      handleEqualsNumber();
     }
     operator = op;
     previousInput = currentInput;
@@ -76,7 +76,7 @@ const handleOperatorInput = (op) => {
 };
 
 // Handle equals
-const handleEquals = () => {
+const handleEqualsNumber = () => {
   if (operator && previousInput) {
     currentInput = eval(`${previousInput} ${operator} ${currentInput}`);
     operator = '';

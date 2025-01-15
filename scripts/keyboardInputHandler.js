@@ -4,7 +4,7 @@ function handleKeyPress(event) {
   const key = event.key;
 
   if (isNumberKey(key)) {
-    handleNumberInput(key);
+    handleInput(key);
   } else if (isEnterKey(key)) {
     handleEquals();
   } else if (isBackspaceKey(key)) {
@@ -36,7 +36,7 @@ function isEscapeKey(key) {
   return key === 'Escape';
 }
 
-function handleNumberInput(number) {
+function handleInput(number) {
   currentInput = currentInput === '0' ? number : currentInput + number;
   updateDisplay(currentInput);
 }
