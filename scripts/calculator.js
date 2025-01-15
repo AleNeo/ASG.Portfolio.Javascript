@@ -36,11 +36,20 @@ const handleButtonClick = (value) => {
     case '/':
       handleOperatorInput(value);
       break;
+    case 'del':
+      handleDelete();
+      break;
     default:
       handleNumberInput(value);
       break;
   }
 };
+
+// Handle backspace
+const handleDelete = () => {
+    currentInput = currentInput.slice(0, -1) || '0';
+      updateDisplay(currentInput);
+}
 
 // Clear current entry
 const clearCurrentEntry = () => {
