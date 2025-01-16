@@ -11,7 +11,7 @@ const updateDisplay = (value) => {
 };
 
 // Reset all
-const clearFull = () => {
+const clearAll = () => {
   currentInput = '0';
   previousInput = '';
   operator = '';
@@ -22,23 +22,26 @@ const clearFull = () => {
 const handleButtonClick = (value) => {
   switch (value) {
     case 'C':
-      clearFull();
+      clearAll();
       break;
     case 'CE':
       clearCurrentEntry();
       break;
     case '=':
-      handleEqualsNumber();
+      handleEquals();
       break;
     case '+':
     case '-':
     case '*':
     case '/':
-      handleOperatorsInput(value);
+      handleOperatorInput(value);
+      break;
+    case '+/-':
+      toggleSign();
       break;
     case 'del':
-      handleDelete();
-      break;
+        handleDelete();
+        break;
     default:
       handleNumberInput(value);
       break;
@@ -64,10 +67,10 @@ const handleNumberInput = (number) => {
 };
 
 // Handle operator input
-const handleOperatorsInput = (op) => {
+const handleOperatorInput = (op) => {
   if (currentInput !== '0') {
     if (operator) {
-      handleEqualsNumber();
+      handleEquals();
     }
     operator = op;
     previousInput = currentInput;
@@ -76,13 +79,18 @@ const handleOperatorsInput = (op) => {
 };
 
 // Handle equals
-const handleEqualsNumber = () => {
+const handleEquals = () => {
   if (operator && previousInput) {
-    currentInput = eval(`${previousInput} ${operator} ${currentInput}`);
-    operator = '';
-    previousInput = '';
+    currentInput = eval(`${previousInput} ${operator} ${currentInput}`).toString();
+    resetOperatorAndPreviousInput();
     updateDisplay(currentInput);
   }
+};
+
+// Toggle sign of current input
+const toggleSign = () => {
+  currentInput = (parseFloat(currentInput) * -1).toString();
+  updateDisplay(currentInput);
 };
 
 // Add event listeners to buttons
@@ -92,3 +100,8 @@ buttons.forEach(button => {
     handleButtonClick(value);
   });
 });
+
+function resetOperatorAndPreviousInput() {
+  operator = '';
+  previousInput = '';
+}
